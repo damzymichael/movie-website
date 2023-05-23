@@ -49,7 +49,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchMovies();
-  }, [movies]);
+  }, []);
 
   const searchMovies = (e) => {
     e.preventDefault();
