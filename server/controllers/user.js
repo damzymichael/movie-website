@@ -12,13 +12,11 @@ const createUser = async (req, res) => {
     const user = await User.signup(username, password);
     //create token
     const token = createToken(user._id);
-    res
-      .status(200)
-      .json({
-        message: "User Created Succsesfully",
-        username,
-        token,
-      });
+    res.status(200).json({
+      message: "User Created Succsesfully",
+      username,
+      token,
+    });
   } catch (err) {
     res.status(400).json({ status: "Error", error: err.message });
   }
@@ -41,4 +39,4 @@ const signUserIn = async (req, res) => {
   }
 };
 
-module.exports = {createUser, signUserIn}
+module.exports = { createUser, signUserIn };

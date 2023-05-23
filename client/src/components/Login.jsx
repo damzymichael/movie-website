@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
-import { useAuthContext } from "../hooks/useAuthContext";
-import { useNavigate } from "react-router-dom";
+import { useLogin } from "../hooks/useLogin";
+import { CircleLoader } from "react-spinners";
+// import { useNavigate } from "react-router-dom";
 
 const Login = ({ setShowLogin }) => {
+  const { login, isLoading: isLoadinG, error: erroR } = useLogin();
   const { signup, isLoading, error } = useSignup();
   const [signUp, setSignup] = useState(false);
   const [username, setUsername] = useState("");
@@ -23,7 +25,15 @@ const Login = ({ setShowLogin }) => {
   };
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("Working...");
+    await login(username, password);
+    if (erroR) {
+      setAlertVisible(true);
+      setTimeout(() => {
+        setAlertVisible(false);
+      }, 3000);
+      return;
+    }
+    // if (!erroR) setShowLogin(false);
   };
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -34,10 +44,9 @@ const Login = ({ setShowLogin }) => {
       setTimeout(() => {
         setAlertVisible(false);
       }, 3000);
-      return
+      return;
     }
-    setShowLogin(false)
-    
+    // if (error) setShowLogin(false);
   };
   return (
     <div className="login">
@@ -71,14 +80,16 @@ const Login = ({ setShowLogin }) => {
 
         {signUp ? (
           <button onClick={handleSignup} disabled={isLoading}>
-            Sign up
+            {isLoading ? <CircleLoader size={15} /> : "Sign up"}
           </button>
         ) : (
-          <button onClick={handleLogin}>Login</button>
+          <button onClick={handleLogin} disabled={isLoadinG}>
+            {isLoadinG ? <CircleLoader size={15} /> : "Login"}
+          </button>
         )}
 
-        {error && alertVisible ? (
-          <center className="error">{error}</center>
+        {(error || erroR) && alertVisible ? (
+          <center className="error">{error || erroR}</center>
         ) : null}
       </form>
       <p>

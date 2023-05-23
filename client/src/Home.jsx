@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import MovieCard from "./components/MovieCard";
 import Hero from "./components/Hero";
@@ -6,14 +7,17 @@ import Login from "./components/Login";
 import searchIcon from "./svg/search.svg";
 import { useAuthContext } from "./hooks/useAuthContext";
 import userImg from "./svg/user.svg";
+import { useLogout } from "./hooks/useLogout";
+import { CircleLoader } from "react-spinners";
 
 const Home = () => {
+  const {logout} = useLogout()
   const { user } = useAuthContext();
-  console.log(user);
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState({});
   const [searchKey, setSearchKey] = useState("");
   const [showLogin, setShowLogin] = useState(false);
+  const [showNavList, setShowNavList] = useState(false);
   const api_url = "https://api.themoviedb.org/3/";
   const fetchMovies = async (searchKey) => {
     const type = searchKey ? "search" : "discover";
@@ -46,8 +50,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchMovies();
-    // eslint-disable-next-line
-  }, []);
+  }, [movies]);
 
   const searchMovies = (e) => {
     e.preventDefault();
@@ -72,8 +75,23 @@ const Home = () => {
               </div>
             </form>
             {user ? (
-              <div className="user-icon">
+              <div
+                className="user-icon"
+                onMouseOver={() => setShowNavList(true)}
+                onMouseLeave={() => setShowNavList(false)}
+              >
                 <img src={userImg} alt="user-icon" />
+                {showNavList && (
+                  <div className="nav-container">
+                    <div className="arrow-up"></div>
+                    <nav className="navbar">
+                      <ul>
+                        <li onClick={() => console.log('my list')}>My List</li>
+                        <li onClick={logout}>Logout</li>
+                      </ul>
+                    </nav>
+                  </div>
+                )}
               </div>
             ) : (
               <button className="login" onClick={() => setShowLogin(true)}>

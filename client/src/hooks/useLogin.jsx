@@ -9,7 +9,7 @@ export const useLogin = () => {
   const login = async (username, password) => {
     setIsLoading(true);
     setError(null);
-    const response = await fetch("http://localhost:5000/tsg/user/login", {
+    const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
