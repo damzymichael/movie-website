@@ -5,8 +5,8 @@ import MovieCard from "./components/MovieCard";
 import Hero from "./components/Hero";
 import Login from "./components/Login";
 import searchIcon from "./svg/search.svg";
-import { useAuthContext } from "./hooks/useAuthContext";
 import userImg from "./svg/user.svg";
+import { useAuthContext } from "./hooks/useAuthContext";
 import { useLogout } from "./hooks/useLogout";
 
 const Home = () => {
