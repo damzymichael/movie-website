@@ -8,7 +8,6 @@ import searchIcon from "./svg/search.svg";
 import { useAuthContext } from "./hooks/useAuthContext";
 import userImg from "./svg/user.svg";
 import { useLogout } from "./hooks/useLogout";
-import { CircleLoader } from "react-spinners";
 
 const Home = () => {
   const {logout} = useLogout()

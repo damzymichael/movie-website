@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
 import { useLogin } from "../hooks/useLogin";
 import { CircleLoader } from "react-spinners";
-// import { useNavigate } from "react-router-dom";
 
 const Login = ({ setShowLogin }) => {
   const { login, isLoading: isLoadinG, error: erroR } = useLogin();
@@ -33,7 +32,7 @@ const Login = ({ setShowLogin }) => {
       }, 3000);
       return;
     }
-    // if (!erroR) setShowLogin(false);
+    setShowLogin(false);
   };
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -46,8 +45,9 @@ const Login = ({ setShowLogin }) => {
       }, 3000);
       return;
     }
-    // if (error) setShowLogin(false);
+    setShowLogin(false);
   };
+
   return (
     <div className="login">
       <span onClick={() => setShowLogin(false)}>+</span>
@@ -80,11 +80,19 @@ const Login = ({ setShowLogin }) => {
 
         {signUp ? (
           <button onClick={handleSignup} disabled={isLoading}>
-            {isLoading ? <CircleLoader size={15} /> : "Sign up"}
+            {isLoading ? (
+              <CircleLoader size={17} cssOverride={{ marginInline: "15px" }} />
+            ) : (
+              "Sign up"
+            )}
           </button>
         ) : (
           <button onClick={handleLogin} disabled={isLoadinG}>
-            {isLoadinG ? <CircleLoader size={15} /> : "Login"}
+            {isLoadinG ? (
+              <CircleLoader size={17} cssOverride={{ marginInline: "15px" }} />
+            ) : (
+              "Login"
+            )}
           </button>
         )}
 
