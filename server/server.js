@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const router = require("./routes/users");
 const cors = require("cors");
+const count = 0;
 
 const app = express();
 app.use(cors());
@@ -14,7 +15,11 @@ app.use((req, res, next) => {
 
 //routes
 app.use("/mwb", router);
-
+app.get("/cron-job", (req, res) => {
+  count += 1;
+  console.log(count);
+  res.json({ count, message: "cron-job" });
+});
 //connect to database
 mongoose
   .connect(process.env.DB_URL)
